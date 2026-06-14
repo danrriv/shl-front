@@ -1,7 +1,7 @@
 import { Component, input, output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { ClipboardService } from '../../../core/services/clipboard.service';
-import { LinkResponse } from '../../../core/models/link.model';
+import { ClipboardService } from '@core/services/clipboard.service';
+import { LinkResponse } from '@core/models/link.model';
 
 @Component({
   selector: 'app-link-card',

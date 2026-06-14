@@ -1,7 +1,7 @@
 <div class="space-y-6">
   <div class="flex items-center justify-between">
-    <h1 class="text-2xl font-bold text-gray-900">Mis Links</h1>
-    <a routerLink="/links/new" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors">
+    <h1 class="text-2xl font-bold text-paper-900">Mis Links</h1>
+    <a routerLink="/links/new" class="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors">
       Nuevo link
     </a>
   </div>
@@ -12,7 +12,7 @@
 
   @if (loading()) {
     <div class="flex justify-center py-12">
-      <div class="h-8 w-8 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600" role="status">
+      <div class="h-8 w-8 animate-spin rounded-full border-4 border-primary-200 border-t-primary-600" role="status">
         <span class="sr-only">Cargando...</span>
       </div>
     </div>
@@ -26,12 +26,12 @@
     @if (totalPages() > 1) {
       <div class="flex items-center justify-center gap-4 pt-4">
         <button (click)="prevPage()" [disabled]="page() === 0"
-                class="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-40 transition-colors">
+                class="rounded-lg px-4 py-2 text-sm font-medium text-paper-700 hover:bg-paper-100 disabled:opacity-40 transition-colors">
           Anterior
         </button>
-        <span class="text-sm text-gray-500">{{ page() + 1 }} / {{ totalPages() }}</span>
+        <span class="text-sm text-paper-500">{{ page() + 1 }} / {{ totalPages() }}</span>
         <button (click)="nextPage()" [disabled]="page() >= totalPages() - 1"
-                class="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-40 transition-colors">
+                class="rounded-lg px-4 py-2 text-sm font-medium text-paper-700 hover:bg-paper-100 disabled:opacity-40 transition-colors">
           Siguiente
         </button>
       </div>

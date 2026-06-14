@@ -33,6 +33,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use `ngClass`, use `class` bindings instead
 - Do NOT use `ngStyle`, use `style` bindings instead
 - When using external templates/styles, use paths relative to the component TS file.
+- UI primitives (components under `shared/components/ui/`) MUST use the `ui-` selector prefix (e.g. `ui-button`, `ui-input`). Feature/shared components use `app-`.
 
 ## State Management
 

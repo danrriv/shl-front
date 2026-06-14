@@ -1,9 +1,9 @@
 import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { LinkService } from '../../core/services/link.service';
-import { LinkResponse } from '../../core/models/link.model';
-import { LinkCard } from '../../shared/components/link-card/link-card';
-import { EmptyState } from '../../shared/components/empty-state/empty-state';
+import { LinkService } from '@core/services/link.service';
+import { LinkResponse } from '@core/models/link.model';
+import { LinkCard } from '@shared/components/link-card/link-card';
+import { EmptyState } from '@shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-dashboard',

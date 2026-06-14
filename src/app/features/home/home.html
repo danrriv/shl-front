@@ -1,93 +1,103 @@
 <section class="flex flex-col items-center justify-center py-16 text-center">
-  <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+  <h1 class="text-4xl font-bold tracking-tight text-paper-900 sm:text-5xl">
     Acorta tus links al instante
   </h1>
-  <p class="mt-4 max-w-lg text-lg text-gray-500">
+  <p class="mt-4 max-w-lg text-lg text-paper-500">
     Pega una URL larga y obten un link corto para compartir. Sin registros, sin límites.
   </p>
 
   <div class="mt-10 w-full max-w-xl">
     <div class="flex gap-3">
-      <input
+      <ui-input
+        class="flex-1"
         type="url"
-        [ngModel]="url()"
-        (ngModelChange)="url.set($event)"
-        (keydown.enter)="submit()"
+        [(value)]="url"
         placeholder="https://ejemplo.com/tu-link-muy-largo..."
-        class="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-        aria-label="URL para acortar"
+        ariaLabel="URL para acortar"
+        (enterPress)="submit()"
       />
-      <button
+      <ui-button
+        [loading]="loading()"
         (click)="submit()"
-        [disabled]="loading()"
-        class="rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white hover:bg-indigo-700 disabled:opacity-50 transition-colors"
       >
-        @if (loading()) {
-          Acortando...
-        } @else {
-          Acortar
-        }
-      </button>
+        Acortar
+      </ui-button>
     </div>
 
     @if (error()) {
       <p class="mt-3 text-sm text-red-600" role="alert">{{ error() }}</p>
+    } @else {
+      <p class="mt-3 text-sm invisible" aria-hidden="true">&nbsp;</p>
     }
 
-    @if (createdLink()) {
-      <div class="mt-6 rounded-xl border border-green-200 bg-green-50 p-5 text-left">
-        <p class="text-sm font-medium text-green-800">Link creado</p>
-        <div class="mt-2 flex items-center gap-3">
-          <a [href]="createdLink()!.shortUrl" target="_blank" rel="noopener noreferrer"
-             class="text-lg font-semibold text-indigo-600 hover:text-indigo-800 break-all">
-            {{ createdLink()!.shortUrl }}
-          </a>
-          <button (click)="copy(createdLink()!.shortUrl)"
-                  class="shrink-0 rounded-lg p-2 text-gray-400 hover:bg-white hover:text-gray-600 transition-colors"
-                  [attr.aria-label]="copiedSignal() === createdLink()!.shortUrl ? 'Copiado' : 'Copiar link'">
-            @if (copiedSignal() === createdLink()!.shortUrl) {
-              <svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            } @else {
-              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
-            }
-          </button>
-        </div>
-        <p class="mt-1 text-sm text-gray-500 break-all">{{ createdLink()!.originalUrl }}</p>
-      </div>
-    }
   </div>
+
+  @if (history().length) {
+    <div class="mt-12 w-full max-w-xl text-left">
+      <h2 class="mb-4 text-lg font-semibold text-paper-800">Historial</h2>
+      <div class="space-y-3">
+        @for (link of history(); track link.shortUrl; let i = $index) {
+          <div class="rounded-xl border p-4 transition-shadow hover:shadow-sm"
+               [class.border-green-200]="i === 0"
+               [class.bg-green-50]="i === 0"
+               [class.border-paper-200]="i > 0"
+               [class.bg-paper]="i > 0">
+            @if (i === 0) {
+              <p class="text-sm font-medium text-green-800">Recién creado</p>
+            }
+            <div class="flex items-center gap-3" [class.mt-2]="i === 0">
+              <a [href]="link.shortUrl" target="_blank" rel="noopener noreferrer"
+                 class="text-lg font-semibold text-primary-600 hover:text-primary-800 break-all">
+                {{ link.shortUrl }}
+              </a>
+              <button (click)="copy(link.shortUrl)"
+                      class="shrink-0 rounded-lg p-2 text-paper-400 hover:bg-paper-100 hover:text-paper-600 transition-colors"
+                      [attr.aria-label]="copiedSignal() === link.shortUrl ? 'Copiado' : 'Copiar link'">
+                @if (copiedSignal() === link.shortUrl) {
+                  <svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                } @else {
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                }
+              </button>
+            </div>
+            <p class="mt-1 text-sm text-paper-500 break-all">{{ link.originalUrl }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  }
 
   <div class="mt-16 grid gap-8 sm:grid-cols-3">
     <div class="text-center">
-      <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100 text-indigo-600">
+      <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 text-primary-600">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
       </div>
-      <h3 class="mt-4 font-semibold text-gray-900">Instantáneo</h3>
-      <p class="mt-2 text-sm text-gray-500">Acorta cualquier link en segundos sin registrarte.</p>
+      <h3 class="mt-4 font-semibold text-paper-900">Instantáneo</h3>
+      <p class="mt-2 text-sm text-paper-500">Acorta cualquier link en segundos sin registrarte.</p>
     </div>
     <div class="text-center">
-      <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100 text-indigo-600">
+      <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 text-primary-600">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
         </svg>
       </div>
-      <h3 class="mt-4 font-semibold text-gray-900">Seguro</h3>
-      <p class="mt-2 text-sm text-gray-500">Tus links son privados y seguros con Google OAuth.</p>
+      <h3 class="mt-4 font-semibold text-paper-900">Seguro</h3>
+      <p class="mt-2 text-sm text-paper-500">Tus links son privados y seguros con Google OAuth.</p>
     </div>
     <div class="text-center">
-      <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100 text-indigo-600">
+      <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary-100 text-primary-600">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
         </svg>
       </div>
-      <h3 class="mt-4 font-semibold text-gray-900">Analíticas</h3>
-      <p class="mt-2 text-sm text-gray-500">Regístrate para ver clicks y gestionar tus links.</p>
+      <h3 class="mt-4 font-semibold text-paper-900">Analíticas</h3>
+      <p class="mt-2 text-sm text-paper-500">Regístrate para ver clicks y gestionar tus links.</p>
     </div>
   </div>
 </section>

@@ -1,7 +1,7 @@
 import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LinkService } from '../../core/services/link.service';
+import { LinkService } from '@core/services/link.service';
 
 @Component({
   selector: 'app-create-link',

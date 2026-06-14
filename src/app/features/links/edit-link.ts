@@ -1,8 +1,8 @@
 import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { LinkService } from '../../core/services/link.service';
-import { LinkResponse } from '../../core/models/link.model';
+import { LinkService } from '@core/services/link.service';
+import { LinkResponse } from '@core/models/link.model';
 
 @Component({
   selector: 'app-edit-link',

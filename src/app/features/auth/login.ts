@@ -1,15 +1,15 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-login',
   template: `
     <div class="flex flex-col items-center justify-center py-16">
-      <h1 class="text-2xl font-bold text-gray-900">Iniciar sesión</h1>
-      <p class="mt-2 text-gray-500">Accede para gestionar tus links</p>
+      <h1 class="text-2xl font-bold text-paper-900">Iniciar sesión</h1>
+      <p class="mt-2 text-paper-500">Accede para gestionar tus links</p>
       <button
         (click)="login()"
-        class="mt-8 flex items-center gap-3 rounded-xl border border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
+        class="mt-8 flex items-center gap-3 rounded-xl border border-paper-300 bg-paper px-6 py-3 font-medium text-paper-700 shadow-sm hover:bg-paper-50 transition-colors"
       >
         <svg class="h-5 w-5" viewBox="0 0 24 24">
           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>

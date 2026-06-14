@@ -1,6 +1,6 @@
-import { Component, inject, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,8 +13,6 @@ export class Header {
   readonly authService = inject(AuthService);
   readonly isAuthenticated = this.authService.isAuthenticated;
   readonly user = this.authService.user;
-
-  readonly userInitial = computed(() => this.user()?.name.charAt(0).toUpperCase() ?? '');
 
   login(): void {
     this.authService.login();
