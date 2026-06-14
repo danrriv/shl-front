@@ -8,7 +8,7 @@ import { Component, input, output, ChangeDetectionStrategy } from '@angular/core
       [type]="type()"
       [disabled]="disabled() || loading()"
       (click)="click.emit()"
-      class="rounded-xl bg-primary-600 px-6 py-3 font-medium text-white hover:bg-primary-700 disabled:opacity-50 transition-colors inline-flex items-center justify-center gap-2"
+      class="rounded-lg bg-primary-600 px-6 py-2 font-medium text-white hover:bg-primary-700 disabled:opacity-50 transition-colors inline-flex items-center justify-center gap-2"
     >
       @if (loading()) {
         <svg class="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">

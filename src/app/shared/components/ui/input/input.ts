@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
       [ngModel]="value()"
       (ngModelChange)="value.set($event)"
       (keydown.enter)="enterPress.emit()"
-      class="w-full rounded-xl border border-paper-300 px-4 py-3 text-paper-900 placeholder:text-paper-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+      class="w-full rounded-lg border border-paper-300 px-4 py-2 text-paper-900 placeholder:text-paper-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
     />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

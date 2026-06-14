@@ -1,6 +1,9 @@
 import { Component, inject, signal, effect, ChangeDetectionStrategy } from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
+import { QRCodeComponent } from 'angularx-qrcode';
 import { LinkService } from '@core/services/link.service';
 import { ClipboardService } from '@core/services/clipboard.service';
+import { QRService } from '@core/services/qr.service';
 import { LinkResponse } from '@core/models/link.model';
 import { Input } from '@shared/components/ui/input/input';
 import { Button } from '@shared/components/ui/button/button';
@@ -9,7 +12,7 @@ const HISTORY_KEY = 'shl-history';
 
 @Component({
   selector: 'app-home',
-  imports: [Input, Button],
+  imports: [Input, Button, QRCodeComponent],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,12 +20,14 @@ const HISTORY_KEY = 'shl-history';
 export class Home {
   readonly #linkService = inject(LinkService);
   readonly #clipboard = inject(ClipboardService);
+  readonly #qrService = inject(QRService);
 
   readonly url = signal('');
   readonly loading = signal(false);
   readonly error = signal('');
   readonly history = signal<LinkResponse[]>(this.#loadHistory());
   readonly copiedSignal = this.#clipboard.copied;
+  readonly qrUrls = signal<Record<string, SafeUrl>>({});
 
   constructor() {
     effect(() => this.#saveHistory(this.history()));
@@ -77,5 +82,16 @@ export class Home {
 
   copy(shortUrl: string): void {
     this.#clipboard.copy(shortUrl);
+  }
+
+  onQRUrl(shortUrl: string, url: SafeUrl): void {
+    this.qrUrls.update((map) => ({ ...map, [shortUrl]: url }));
+  }
+
+  downloadQR(shortUrl: string): void {
+    const url = this.qrUrls()[shortUrl];
+    if (url) {
+      this.#qrService.download(url, `qr-${shortUrl.replace(/^https?:\/\//, '').replace(/[^a-zA-Z0-9]/g, '-')}`);
+    }
   }
 }
