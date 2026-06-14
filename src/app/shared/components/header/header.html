@@ -1,0 +1,25 @@
+<header class="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-sm">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+    <a routerLink="/" class="flex items-center gap-2 text-lg font-bold text-gray-900" aria-label="Inicio">
+      <svg class="h-7 w-7 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+      </svg>
+      shl
+    </a>
+
+    <nav class="flex items-center gap-4" aria-label="Navegación principal">
+      @if (isAuthenticated()) {
+        <a routerLink="/dashboard" routerLinkActive="text-indigo-600" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+          Dashboard
+        </a>
+        <button (click)="logout()" class="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 transition-colors">
+          Salir
+        </button>
+      } @else {
+        <button (click)="login()" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors">
+          Iniciar sesión
+        </button>
+      }
+    </nav>
+  </div>
+</header>
